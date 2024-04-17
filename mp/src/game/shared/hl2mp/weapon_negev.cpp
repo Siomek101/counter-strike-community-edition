@@ -44,6 +44,7 @@ public:
 	void	AddViewKick(void);
 	void	SecondaryAttack(void);
 
+	float GetRecoilScale() { return 1.0; };
 	float  GetMinRecoilSpread() { return 0.01; };
 	float  GetMaxRecoilSpread() { return 0.01; };
 	Vector	GetSpread() { return Vector(0,0,0); }

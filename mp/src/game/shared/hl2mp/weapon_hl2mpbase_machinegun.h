@@ -37,6 +37,7 @@ public:
 	virtual void	FireBullets( const FireBulletsInfo_t &info );
 	virtual bool	Deploy( void );
 
+	float			GetRecoilScale() { return 1.0; };
 	float			GetMinRecoilSpread() { return 0; }
 	float			GetMaxRecoilSpread() { return 0.5; }
 	Vector			GetSpread() { return VECTOR_CONE_15DEGREES; }

@@ -100,8 +100,8 @@ void CHL2MPMachineGun::PrimaryAttack( void )
 	FireBulletsInfo_t info;
 	info.m_iShots = iBulletsToFire;
 	info.m_vecSrc = pHL2MPPlayer->Weapon_ShootPosition( );
-
-	float recoilUp = Max(-0.2 * m_nShotsFired, -10.0);
+	
+	float recoilUp = Max(-0.2 * (m_nShotsFired * GetRecoilScale()), -10.0);
 	info.m_vecDirShooting = pPlayer->GetAutoaimVector(AUTOAIM_5DEGREES, QAngle(recoilUp, recoilUp * RandomFloat(GetMinRecoilSpread(), GetMaxRecoilSpread()), 0));
 
 

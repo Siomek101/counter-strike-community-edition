@@ -58,8 +58,9 @@ public:
 	void	AddViewKick( void );
 	void	DryFire( void );
 
-	float  GetMinRecoilSpread() { return 0.5; };
-	float  GetMaxRecoilSpread() { return 0.5; };
+	float	GetRecoilScale() { return 5.0; };
+	float	GetMinRecoilSpread() { return 0.5; };
+	float	GetMaxRecoilSpread() { return 0.5; };
 	Vector	GetSpread() { return VECTOR_CONE_20DEGREES; }
 
 	void	UpdatePenaltyTime( void );
@@ -217,7 +218,7 @@ void CWeaponPistol::DryFire( void )
 //-----------------------------------------------------------------------------
 void CWeaponPistol::PrimaryAttack( void )
 {
-	if ( ( gpGlobals->curtime - m_flLastAttackTime ) > 0.5f )
+	if ( ( gpGlobals->curtime - m_flLastAttackTime ) > 1.0f )
 	{
 		m_nNumShotsFired = 0;
 	}
@@ -225,6 +226,8 @@ void CWeaponPistol::PrimaryAttack( void )
 	{
 		m_nNumShotsFired++;
 	}
+
+	m_nShotsFired = m_nNumShotsFired;
 
 	m_flLastAttackTime = gpGlobals->curtime;
 	m_flSoonestPrimaryAttack = gpGlobals->curtime + PISTOL_FASTEST_REFIRE_TIME;
