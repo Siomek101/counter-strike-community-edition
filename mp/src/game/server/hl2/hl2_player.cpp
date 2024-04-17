@@ -86,7 +86,7 @@ ConVar hl2_sprintspeed( "hl2_sprintspeed", "320" );
 ConVar hl2_darkness_flashlight_factor ( "hl2_darkness_flashlight_factor", "1" );
 
 #ifdef HL2MP
-	#define	HL2_WALK_SPEED 85
+	#define	HL2_WALK_SPEED 250
 	#define	HL2_NORM_SPEED 250
 	#define	HL2_SPRINT_SPEED 130
 #else
@@ -1167,8 +1167,8 @@ void CHL2_Player::InitSprinting( void )
 bool CHL2_Player::CanSprint()
 {
 	return ( m_bSprintEnabled &&										// Only if sprint is enabled 
-			!IsWalking() &&												// Not if we're walking
-			!( m_Local.m_bDucked && !m_Local.m_bDucking ) &&			// Nor if we're ducking
+			//!IsWalking() &&												// Not if we're walking
+			//!( m_Local.m_bDucked && !m_Local.m_bDucking ) &&			// Nor if we're ducking
 			(GetWaterLevel() != 3) &&									// Certainly not underwater
 			(GlobalEntity_GetState("suit_no_sprint") != GLOBAL_ON) );	// Out of the question without the sprint module
 }
@@ -1275,7 +1275,12 @@ void CHL2_Player::StartWalking( void )
 //-----------------------------------------------------------------------------
 void CHL2_Player::StopWalking( void )
 {
-	SetMaxSpeed( HL2_NORM_SPEED );
+	if (IsSprinting()) {
+		StartSprinting();
+	}
+	else {
+		StopSprinting();
+	}
 	m_fIsWalking = false;
 }
 
@@ -2790,7 +2795,7 @@ bool CHL2_Player::ClientCommand( const CCommand &args )
 	if (!Q_stricmp(args[0], "DropPrimary"))
 	{
 		CBaseCombatWeapon* wpn = GetActiveWeapon();
-		if (!Q_stricmp(wpn->GetName(), "weapon_stunstick") || !Q_stricmp(wpn->GetName(), "weapon_physcannon")) {
+		if (!Q_stricmp(wpn->GetName(), "weapon_stunstick") || !Q_stricmp(wpn->GetName(), "weapon_crowbar") || !Q_stricmp(wpn->GetName(), "weapon_physcannon")) {
 			return true;
 		}
 		Weapon_Drop(wpn, NULL, NULL);

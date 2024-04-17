@@ -2401,7 +2401,7 @@ void CWeaponPhysCannon::DetachObject( bool playSound, bool wasLaunched )
 	if( pOwner != NULL )
 	{
 		pOwner->EnableSprint( true );
-		pOwner->SetMaxSpeed( hl2_normspeed.GetFloat() );
+		//pOwner->SetMaxSpeed( hl2_normspeed.GetFloat() );
 	}
 
 	CBaseEntity *pObject = m_grabController.GetAttached();
