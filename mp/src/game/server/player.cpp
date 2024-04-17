@@ -6947,6 +6947,16 @@ Vector CBasePlayer::GetAutoaimVector( float flScale )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
+Vector CBasePlayer::GetAutoaimVector(float flScale, QAngle recoil)
+{
+	// Never autoaim a predicted weapon (for now)
+	Vector	forward;
+	AngleVectors(GetAbsAngles() + m_Local.m_vecPunchAngle + recoil, &forward);
+	return	forward;
+}
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 Vector CBasePlayer::GetAutoaimVector( float flScale, float flMaxDist )
 {
 	autoaim_params_t params;

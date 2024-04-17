@@ -662,7 +662,7 @@ Vector C_HL2MP_Player::GetAutoaimVector(float flScale, QAngle recoil)
 //-----------------------------------------------------------------------------
 bool C_HL2MP_Player::CanSprint( void )
 {
-	return ( (!m_Local.m_bDucked && !m_Local.m_bDucking) && (GetWaterLevel() != 3) );
+	return /*((!m_Local.m_bDucked && !m_Local.m_bDucking) && */((GetWaterLevel() != 3));
 }
 
 
@@ -680,9 +680,9 @@ void C_HL2MP_Player::StartSprinting( void )
 		return;
 	}
 
-	CPASAttenuationFilter filter( this );
-	filter.UsePredictionRules();
-	EmitSound( filter, entindex(), "HL2Player.SprintStart" );
+	//CPASAttenuationFilter filter( this );
+	//filter.UsePredictionRules();
+	//EmitSound( filter, entindex(), "HL2Player.SprintStart" );
 
 	SetMaxSpeed( HL2_SPRINT_SPEED );
 	m_fIsSprinting = true;

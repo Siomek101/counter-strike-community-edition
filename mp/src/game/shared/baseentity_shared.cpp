@@ -1831,12 +1831,10 @@ void CBaseEntity::FireBullets( const FireBulletsInfo_t &info )
 		// Now hit all triggers along the ray that respond to shots...
 		// Clip the ray to the first collided solid returned from traceline
 		CTakeDamageInfo triggerInfo( pAttacker, pAttacker, info.m_flDamage, nDamageType );
-		CalculateBulletDamageForce( &triggerInfo, info.m_iAmmoType, vecDir, tr.endpos );
+		//CalculateBulletDamageForce( &triggerInfo, info.m_iAmmoType, vecDir, tr.endpos );
 		triggerInfo.ScaleDamageForce( info.m_flDamageForceScale );
 		triggerInfo.SetAmmoType( info.m_iAmmoType );
 
-		Msg("1 - %f\n", info.m_flDamage);
-		Msg("2 - %f\n", info.m_iPlayerDamage); 
 #ifdef GAME_DLL
 		TraceAttackToTriggers( triggerInfo, tr.startpos, tr.endpos, vecDir );
 #endif
@@ -1903,8 +1901,8 @@ void CBaseEntity::FireBullets( const FireBulletsInfo_t &info )
 			{
 				// Damage specified by function parameter
 				CTakeDamageInfo dmgInfo( this, pAttacker, flActualDamage, nActualDamageType );
-				ModifyFireBulletsDamage( &dmgInfo );
-				CalculateBulletDamageForce( &dmgInfo, info.m_iAmmoType, vecDir, tr.endpos );
+				//ModifyFireBulletsDamage( &dmgInfo );
+				//CalculateBulletDamageForce( &dmgInfo, info.m_iAmmoType, vecDir, tr.endpos );
 				dmgInfo.ScaleDamageForce( info.m_flDamageForceScale );
 				dmgInfo.SetAmmoType( info.m_iAmmoType );
 				tr.m_pEnt->DispatchTraceAttack( dmgInfo, vecDir, &tr );

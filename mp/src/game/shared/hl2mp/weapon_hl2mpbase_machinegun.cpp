@@ -100,12 +100,10 @@ void CHL2MPMachineGun::PrimaryAttack( void )
 	FireBulletsInfo_t info;
 	info.m_iShots = iBulletsToFire;
 	info.m_vecSrc = pHL2MPPlayer->Weapon_ShootPosition( );
-#if defined( CLIENT_DLL ) 
+
 	float recoilUp = Max(-0.2 * m_nShotsFired, -10.0);
 	info.m_vecDirShooting = pPlayer->GetAutoaimVector(AUTOAIM_5DEGREES, QAngle(recoilUp, recoilUp * RandomFloat(GetMinRecoilSpread(), GetMaxRecoilSpread()), 0));
-#else
-	info.m_vecDirShooting = pPlayer->GetAutoaimVector(AUTOAIM_5DEGREES);
-#endif
+
 
 	info.m_vecSpread = pHL2MPPlayer->GetAttackSpread( this );
 	info.m_flDistance = MAX_TRACE_LENGTH;

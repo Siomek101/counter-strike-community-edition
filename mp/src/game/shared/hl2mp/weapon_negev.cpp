@@ -66,7 +66,7 @@ public:
 		Vector vel = GetOwner()->GetLocalVelocity();
 		float speed = vel.x + vel.y + vel.z;
 		speed = Min(Max(abs(speed),1.0f), 300.0f);
-		if (speed < 100) return cone;
+		if (speed < 150) return cone;
 		cone.x = cone.x * speed;
 		cone.y = cone.x;
 		cone.z = cone.x;

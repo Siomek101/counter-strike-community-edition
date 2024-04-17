@@ -211,10 +211,11 @@ void ApplyMultiDamage( void )
 	if ( !g_MultiDamage.GetTarget() )
 		return;
 
+
 #ifndef CLIENT_DLL
 	const CBaseEntity *host = te->GetSuppressHost();
 	te->SetSuppressHost( NULL );
-		
+
 	g_MultiDamage.GetTarget()->TakeDamage( g_MultiDamage );
 
 	te->SetSuppressHost( (CBaseEntity*)host );
@@ -267,12 +268,12 @@ void AddMultiDamage( const CTakeDamageInfo &info, CBaseEntity *pEntity )
 			{
 				if ( g_MultiDamage.GetDamageForce() == vec3_origin )
 				{
-					Warning( "AddMultiDamage:  g_MultiDamage.GetDamageForce() == vec3_origin\n" );
+					//Warning( "AddMultiDamage:  g_MultiDamage.GetDamageForce() == vec3_origin\n" );
 				}
 
 				if ( g_MultiDamage.GetDamagePosition() == vec3_origin)
 				{
-					Warning( "AddMultiDamage:  g_MultiDamage.GetDamagePosition() == vec3_origin\n" );
+					//Warning( "AddMultiDamage:  g_MultiDamage.GetDamagePosition() == vec3_origin\n" );
 				}
 			}
 		}

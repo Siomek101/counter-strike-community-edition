@@ -562,6 +562,7 @@ public:
 	void					ResetAutoaim( void );
 	
 	virtual Vector			GetAutoaimVector( float flScale );
+	virtual Vector			GetAutoaimVector(float flScale, QAngle recoil);
 	virtual Vector			GetAutoaimVector( float flScale, float flMaxDist );
 	virtual void			GetAutoaimVector( autoaim_params_t &params );
 

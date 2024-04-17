@@ -1443,8 +1443,10 @@ int CBaseEntity::OnTakeDamage( const CTakeDamageInfo &info )
 //-----------------------------------------------------------------------------
 int CBaseEntity::TakeDamage( const CTakeDamageInfo &inputInfo )
 {
+	//Msg("Take DMG rules\n");
 	if ( !g_pGameRules )
 		return 0;
+	//Msg("Take DMG 2\n");
 
 	bool bHasPhysicsForceDamage = !g_pGameRules->Damage_NoPhysicsForce( inputInfo.GetDamageType() );
 	if ( bHasPhysicsForceDamage && inputInfo.GetDamageType() != DMG_GENERIC )
@@ -1478,18 +1480,22 @@ int CBaseEntity::TakeDamage( const CTakeDamageInfo &inputInfo )
 	{
 		return 0;
 	}
+	//Msg("Take DMG 3\n");
 
 	if( !g_pGameRules->AllowDamage(this, inputInfo) )
 	{
 		return 0;
 	}
+	//Msg("Take DMG 4\n");
 
 	if ( PhysIsInCallback() )
 	{
 		PhysCallbackDamage( this, inputInfo );
+		//Msg("Take DMG 5\n");
 	}
 	else
 	{
+		//Msg("Take DMG YESS\n");
 		CTakeDamageInfo info = inputInfo;
 		
 		// Scale the damage by the attacker's modifier.
@@ -1564,7 +1570,7 @@ int CBaseEntity::VPhysicsTakeDamage( const CTakeDamageInfo &info )
 		// takedamageinfo.cpp. If you think the damage shouldn't cause force (unlikely!) then you can set the 
 		// damage type to DMG_GENERIC, or | DMG_CRUSH if you need to preserve the damage type for purposes of HUD display.
 #if !defined( TF_DLL )
-		Assert( force != vec3_origin && offset != vec3_origin );
+		//Assert( force != vec3_origin && offset != vec3_origin );
 #else
 		// this was spamming the console for Payload maps in TF (trigger_hurt entity on the front of the cart)
 		if ( !TFGameRules() || TFGameRules()->GetGameType() != TF_GAMETYPE_ESCORT )
