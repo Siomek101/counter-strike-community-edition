@@ -7,7 +7,7 @@ WeaponData
 	"viewmodel"				"models/weapons/v_crowbar.mdl"
 	"playermodel"			"models/weapons/w_crowbar.mdl"
 	"anim_prefix"			"crowbar"
-	"bucket"				"0"
+	"bucket"				"2"
 	"bucket_position"		"0"
 
 	"clip_size"				"-1"

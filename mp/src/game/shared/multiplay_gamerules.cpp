@@ -459,10 +459,19 @@ ConVarRef suitcharger( "sk_suitcharger" );
 		return false;
 	}
 
+#ifdef GAME_DLL
+	ConVar cl_switch_weapon_on_pickup("cl_switch_weapon_on_pickup", "0", FCVAR_CLIENTDLL, "Switch weapon on pickup?");
+#endif // GAME_DLL
+
+
 	//=========================================================
 	//=========================================================
 	bool CMultiplayRules::FShouldSwitchWeapon( CBasePlayer *pPlayer, CBaseCombatWeapon *pWeapon )
 	{
+#ifdef GAME_DLL
+		return cl_switch_weapon_on_pickup.GetBool();
+#endif // GAME_DLL
+
 		if ( !pPlayer->Weapon_CanSwitchTo( pWeapon ) )
 		{
 			// Can't switch weapons for some reason.
@@ -489,7 +498,7 @@ ConVarRef suitcharger( "sk_suitcharger" );
 
 		if ( pWeapon->GetWeight() > pPlayer->GetActiveWeapon()->GetWeight() )
 		{
-			return true;
+			//return true;
 		}
 
 		return false;

@@ -2667,6 +2667,10 @@ void CHL2_Player::Weapon_Equip( CBaseCombatWeapon *pWeapon )
 	}
 
 #endif
+	//if (Weapon_GetSlot(pWeapon->GetSlot()) != NULL) {
+	//	Weapon_DropSlot(pWeapon->GetSlot());
+	//	return;
+	//}
 
 	if( GetActiveWeapon() == NULL )
 	{
@@ -2752,7 +2756,9 @@ bool CHL2_Player::BumpWeapon( CBaseCombatWeapon *pWeapon )
 		return true;
 	}
 #else
-
+	if (pWeapon->GetSlot() <= 3 && Weapon_SlotOccupied(pWeapon)) {
+		return false;
+	}
 	return BaseClass::BumpWeapon( pWeapon );
 
 #endif
@@ -2795,7 +2801,7 @@ bool CHL2_Player::ClientCommand( const CCommand &args )
 	if (!Q_stricmp(args[0], "DropPrimary"))
 	{
 		CBaseCombatWeapon* wpn = GetActiveWeapon();
-		if (!Q_stricmp(wpn->GetName(), "weapon_stunstick") || !Q_stricmp(wpn->GetName(), "weapon_crowbar") || !Q_stricmp(wpn->GetName(), "weapon_physcannon")) {
+		if (!Q_stricmp(wpn->GetName(), "weapon_knife")) {
 			return true;
 		}
 		Weapon_Drop(wpn, NULL, NULL);
@@ -2860,14 +2866,19 @@ void CHL2_Player::PlayerUse ( void )
 
 	CBaseEntity *pUseEntity = FindUseEntity();
 
+
 	bool usedSomething = false;
 
 	// Found an object
 	if ( pUseEntity )
 	{
+
 		//!!!UNDONE: traceline here to prevent +USEing buttons through walls			
 		int caps = pUseEntity->ObjectCaps();
 		variant_t emptyVariant;
+		
+
+		
 
 		if ( m_afButtonPressed & IN_USE )
 		{
@@ -2896,30 +2907,30 @@ void CHL2_Player::PlayerUse ( void )
 			usedSomething = true;
 		}
 
-#if	HL2_SINGLE_PRIMARY_WEAPON_MODE
+		if (m_afButtonPressed & IN_USE) {//Check for weapon pick-up
+			CBaseCombatWeapon* pWeapon = dynamic_cast<CBaseCombatWeapon*>(pUseEntity);
 
-		//Check for weapon pick-up
-		if ( m_afButtonPressed & IN_USE )
-		{
-			CBaseCombatWeapon *pWeapon = dynamic_cast<CBaseCombatWeapon *>(pUseEntity);
-
-			if ( ( pWeapon != NULL ) && ( Weapon_CanSwitchTo( pWeapon ) ) )
+			if ((pWeapon != NULL) /* && (Weapon_CanSwitchTo(pWeapon))*/)
 			{
+				Weapon_DropSlot(pWeapon->GetSlot());
+				Weapon_Equip(pWeapon);
+				Weapon_Switch(pWeapon);
 				//Try to take ammo or swap the weapon
-				if ( Weapon_OwnsThisType( pWeapon->GetClassname(), pWeapon->GetSubType() ) )
-				{
-					Weapon_EquipAmmoOnly( pWeapon );
-				}
-				else
-				{
-					Weapon_DropSlot( pWeapon->GetSlot() );
-					Weapon_Equip( pWeapon );
-				}
+				//if (Weapon_OwnsThisType(pWeapon->GetClassname(), pWeapon->GetSubType()))
+				//{
+				//	Weapon_EquipAmmoOnly(pWeapon);
+				//}
+				//else
+				//{
+				//}
 
 				usedSomething = true;
 			}
 		}
-#endif
+//#if	HL2_SINGLE_PRIMARY_WEAPON_MODE
+
+		
+//#endif
 	}
 	else if ( m_afButtonPressed & IN_USE )
 	{

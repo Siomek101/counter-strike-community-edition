@@ -1127,12 +1127,14 @@ CBaseEntity *CBasePlayer::FindUseEntity()
 
 		if ( bUsable )
 		{
+			Msg("usable!\n");
 			Vector delta = tr.endpos - tr.startpos;
 			float centerZ = CollisionProp()->WorldSpaceCenter().z;
 			delta.z = IntervalDistance( tr.endpos.z, centerZ + CollisionProp()->OBBMins().z, centerZ + CollisionProp()->OBBMaxs().z );
 			float dist = delta.Length();
 			if ( dist < PLAYER_USE_RADIUS )
 			{
+				Msg("in radius!\n");
 #ifndef CLIENT_DLL
 
 				if ( sv_debug_player_use.GetBool() )
@@ -1186,8 +1188,8 @@ CBaseEntity *CBasePlayer::FindUseEntity()
 		if ( !pObject )
 			continue;
 
-		if ( !IsUseableEntity( pObject, FCAP_USE_IN_RADIUS ) )
-			continue;
+		//if ( !IsUseableEntity( pObject, FCAP_USE_IN_RADIUS ) )
+		//	continue;
 
 		// see if it's more roughly in front of the player than previous guess
 		Vector point;
@@ -1257,6 +1259,8 @@ CBaseEntity *CBasePlayer::FindUseEntity()
 		}
 		else
 		{
+			NDebugOverlay::Line(searchCenter, tr.endpos, 0, 255, 0, true, 30);
+			NDebugOverlay::Cross3D(tr.endpos, 16, 0, 255, 0, true, 30);
 			NDebugOverlay::Box( pNearest->WorldSpaceCenter(), Vector(-8, -8, -8), Vector(8, 8, 8), 0, 255, 0, true, 30 );
 		}
 	}

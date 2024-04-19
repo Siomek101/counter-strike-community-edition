@@ -310,20 +310,27 @@ void CHL2MP_Player::GiveDefaultItems( void )
 	CBasePlayer::GiveAmmo( 6,	"Buckshot");
 	CBasePlayer::GiveAmmo( 6,	"357" );
 
-	if ( GetPlayerModelType() == PLAYER_SOUNDS_METROPOLICE || GetPlayerModelType() == PLAYER_SOUNDS_COMBINESOLDIER )
+	/*if (GetPlayerModelType() == PLAYER_SOUNDS_METROPOLICE || GetPlayerModelType() == PLAYER_SOUNDS_COMBINESOLDIER)
 	{
 		GiveNamedItem( "weapon_stunstick" );
 	}
 	else if ( GetPlayerModelType() == PLAYER_SOUNDS_CITIZEN )
 	{
 		GiveNamedItem( "weapon_crowbar" );
-	}
+	}*/
+
+	GiveNamedItem("weapon_knife");
 	
 	GiveNamedItem( "weapon_pistol" );
-	GiveNamedItem( "weapon_smg1" );
+	//GiveNamedItem( "weapon_smg1" );
 	GiveNamedItem( "weapon_frag" );
-	GiveNamedItem( "weapon_physcannon" );
-	GiveNamedItem("weapon_negev");
+	//GiveNamedItem( "weapon_physcannon" );
+	int randomint = random->RandomInt(0, 2);
+	if (randomint == 0) {
+		GiveNamedItem("weapon_negev");
+	} else if (randomint == 1) {
+		GiveNamedItem("weapon_smg1");
+	}
 
 	const char *szDefaultWeaponName = engine->GetClientConVarValue( engine->IndexOfEdict( edict() ), "cl_defaultweapon" );
 
@@ -988,6 +995,10 @@ bool CHL2MP_Player::BumpWeapon( CBaseCombatWeapon *pWeapon )
 	// Can I have this weapon type?
 	if ( !IsAllowedToPickupWeapons() )
 		return false;
+
+	if (Weapon_SlotOccupied(pWeapon)) {
+		return false;
+	}
 
 	if ( pOwner || !Weapon_CanUse( pWeapon ) || !g_pGameRules->CanHavePlayerItem( this, pWeapon ) )
 	{

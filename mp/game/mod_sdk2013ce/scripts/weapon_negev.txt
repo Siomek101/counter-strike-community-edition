@@ -7,8 +7,8 @@ WeaponData
 	"viewmodel"				"models/weapons/v_mach_negev.mdl"
 	"playermodel"			"models/weapons/w_mach_negev.mdl"	//FIXME: 
 	"anim_prefix"			"negev"
-	"bucket"				"2"
-	"bucket_position"		"2"
+	"bucket"				"0"
+	"bucket_position"		"0"
 
 	"clip_size"				"150"
 	"clip2_size"			"-1"

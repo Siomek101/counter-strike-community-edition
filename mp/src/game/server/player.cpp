@@ -2777,9 +2777,14 @@ bool CBasePlayer::IsUseableEntity( CBaseEntity *pEntity, unsigned int requiredCa
 	if ( pEntity )
 	{
 		int caps = pEntity->ObjectCaps();
+		/*Msg("Testing %d\n", caps);
+		Msg("FCAP_IMPULSE_USE: %d\n", caps & FCAP_IMPULSE_USE);
+		Msg("FCAP_CONTINUOUS_USE: %d\n", caps & FCAP_CONTINUOUS_USE);
+		Msg("FCAP_ONOFF_USE: %d\n", caps & FCAP_ONOFF_USE);
+		Msg("FCAP_DIRECTIONAL_USE: %d\n", caps & FCAP_DIRECTIONAL_USE);*/
 		if ( caps & (FCAP_IMPULSE_USE|FCAP_CONTINUOUS_USE|FCAP_ONOFF_USE|FCAP_DIRECTIONAL_USE) )
 		{
-			if ( (caps & requiredCaps) == requiredCaps )
+			if (requiredCaps == 0 || (caps & requiredCaps) == requiredCaps )
 			{
 				return true;
 			}
@@ -6598,6 +6603,13 @@ bool CBasePlayer::BumpWeapon( CBaseCombatWeapon *pWeapon )
 	// Can I have this weapon type?
 	if ( !IsAllowedToPickupWeapons() )
 		return false;
+
+	if (Weapon_GetSlot(pWeapon->GetSlot()) == NULL) {
+		return false;
+	}
+	else {
+		return true;
+	}
 
 	if ( pOwner || !Weapon_CanUse( pWeapon ) || !g_pGameRules->CanHavePlayerItem( this, pWeapon ) )
 	{
