@@ -215,17 +215,18 @@ void CHudWeaponSelection::OnThink( void )
 {
 	float flSelectionTimeout = SELECTION_TIMEOUT_THRESHOLD;
 	float flSelectionFadeoutTime = SELECTION_FADEOUT_TIME;
-	if ( hud_fastswitch.GetBool() )
-	{
-		flSelectionTimeout = FASTSWITCH_DISPLAY_TIMEOUT;
-		flSelectionFadeoutTime = FASTSWITCH_FADEOUT_TIME;
-	}
+	//if ( hud_fastswitch.GetBool() )
+	//{
+	//	flSelectionTimeout = FASTSWITCH_DISPLAY_TIMEOUT;
+	//	flSelectionFadeoutTime = FASTSWITCH_FADEOUT_TIME;
+	//}
 
 	// Time out after awhile of inactivity
 	if ( ( gpGlobals->curtime - m_flSelectionTime ) > flSelectionTimeout )
 	{
 		if (!m_bFadingOut)
 		{
+
 			// start fading out
 			g_pClientMode->GetViewportAnimationController()->StartAnimationSequence( "FadeOutWeaponSelectionMenu" );
 			m_bFadingOut = true;
@@ -429,8 +430,8 @@ void CHudWeaponSelection::Paint()
 	int xpos;
 	int ypos;
 
-	if (!ShouldDraw())
-		return;
+	//if (!ShouldDraw())
+	//	return;
 
 	C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
 	if ( !pPlayer )
@@ -452,7 +453,7 @@ void CHudWeaponSelection::Paint()
 		return;
 
 	bool bPushedViewport = false;
-	if( hud_fastswitch.GetInt() == HUDTYPE_FASTSWITCH  || hud_fastswitch.GetInt() == HUDTYPE_PLUS )
+	if( hud_fastswitch.GetInt() == HUDTYPE_PLUS )
 	{
 		CMatRenderContextPtr pRenderContext( materials );
 		if( pRenderContext->GetRenderTarget() )
@@ -660,10 +661,11 @@ void CHudWeaponSelection::Paint()
 		}
 	break;
 
+	case HUDTYPE_FASTSWITCH:
 	case HUDTYPE_BUCKETS:
 		{
 			// bucket style
-			width = (MAX_WEAPON_SLOTS - 1) * (m_flSmallBoxSize + m_flBoxGap) + largeBoxWide;
+			width = (MAX_WEAPON_SLOTS - 1) * (largeBoxWide + m_flBoxGap) + largeBoxWide;
 			xpos  = (GetWide() - width) / 2;
 			ypos  = 0;
 
@@ -713,8 +715,17 @@ void CHudWeaponSelection::Paint()
 					// check to see if there is a weapons in this bucket
 					if ( GetFirstPos( i ) )
 					{
+						C_BaseCombatWeapon* pWeapon = GetFirstPos(i);
 						// draw has weapon in slot
-						DrawBox(xpos, ypos, m_flSmallBoxSize, m_flSmallBoxSize, m_BoxColor, m_flAlphaOverride, i + 1);
+						DrawLargeWeaponBox(pWeapon,
+							false,
+							xpos,
+							ypos,
+							largeBoxWide,
+							largeBoxTall,
+							m_BoxColor,
+							GetWeaponBoxAlpha(false),
+							i+1);
 					}
 					else
 					{
@@ -722,7 +733,7 @@ void CHudWeaponSelection::Paint()
 						DrawBox(xpos, ypos, m_flSmallBoxSize, m_flSmallBoxSize, m_EmptyBoxColor, m_flAlphaOverride, -1);
 					}
 
-					xpos += m_flSmallBoxSize;
+					xpos += largeBoxWide;
 				}
 
 				// reset position
@@ -755,6 +766,7 @@ void CHudWeaponSelection::DrawLargeWeaponBox( C_BaseCombatWeapon *pWeapon, bool 
 	
 	switch ( hud_fastswitch.GetInt() )
 	{
+	case HUDTYPE_FASTSWITCH:
 	case HUDTYPE_BUCKETS:
 		{
 			// draw box for selected weapon
@@ -771,15 +783,15 @@ void CHudWeaponSelection::DrawLargeWeaponBox( C_BaseCombatWeapon *pWeapon, bool 
 				int x_offs = (boxWide - iconWidth) / 2;
 
 				int y_offs;
-				if ( bSelected && hud_fastswitch.GetInt() != 0 )
-				{
-					// place the icon aligned with the non-selected version
-					y_offs = (boxTall / 1.5f - iconHeight) / 2;
-				}
-				else
-				{
+				//if ( bSelected && hud_fastswitch.GetInt() != 0 )
+				//{
+				//	// place the icon aligned with the non-selected version
+				//	y_offs = (boxTall / 1.5f - iconHeight) / 2;
+				//}
+				//else
+				//{
 					y_offs = (boxTall - iconHeight) / 2;
-				}
+				//}
 
 				if (!pWeapon->CanBeSelected())
 				{
@@ -1350,7 +1362,7 @@ void CHudWeaponSelection::FastWeaponSwitch( int iWeaponSlot )
 	if ( HUDTYPE_CAROUSEL != hud_fastswitch.GetInt() )
 	{
 		// kill any fastswitch display
-		m_flSelectionTime = 0.0f;
+		//m_flSelectionTime = 0.0f;
 	}
 }
 

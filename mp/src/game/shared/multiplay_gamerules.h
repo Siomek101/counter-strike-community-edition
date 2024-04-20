@@ -98,11 +98,11 @@ public:
 
 	int roundStartTime = 0;
 	int freezetime = 10;
-	bool IsFreezetime() { return IsTeamVsTeam() && gpGlobals->curtime - roundStartTime > freezetime; };
-	void ResetRound() {
-
-		roundStartTime = freezetime;
-	}
+	//bool IsFreezetime() { return IsTeamVsTeam() && gpGlobals->curtime - roundStartTime > freezetime; };
+	//void ResetRound() {
+	//
+	//	roundStartTime = freezetime;
+	//}
 
 	CMultiplayRules();
 	virtual ~CMultiplayRules() {}
