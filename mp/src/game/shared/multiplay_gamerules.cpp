@@ -444,12 +444,19 @@ ConVarRef suitcharger( "sk_suitcharger" );
 		}
 	}
 
+	ConVar mp_game_mode("mp_game_mode", "0", FCVAR_SERVER_CAN_EXECUTE | FCVAR_REPLICATED, "Gamemode, 0 - dm, 1 - teamplay");
+	//=========================================================
+	//=========================================================
+	bool CMultiplayRules::IsTeamVsTeam(void)
+	{
+		return mp_game_mode.GetInt() == 1;
+	}
 
 	//=========================================================
 	//=========================================================
-	bool CMultiplayRules::IsDeathmatch( void )
+	bool CMultiplayRules::IsDeathmatch(void)
 	{
-		return true;
+		return mp_game_mode.GetInt() == 0;
 	}
 
 	//=========================================================

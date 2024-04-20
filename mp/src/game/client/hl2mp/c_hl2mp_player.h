@@ -90,6 +90,7 @@ public:
 	void StartWalking( void );
 	void StopWalking( void );
 	bool IsWalking( void ) { return m_fIsWalking; }
+	void ResetMaxSpeed();
 
 #ifdef SDK2013CE
 	virtual void					UpdateClientSideAnimation();

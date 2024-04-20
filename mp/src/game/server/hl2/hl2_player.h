@@ -114,7 +114,7 @@ public:
 	virtual void		StopLoopingSounds( void );
 	virtual void		Splash( void );
 	virtual void 		ModifyOrAppendPlayerCriteria( AI_CriteriaSet& set );
-
+	void ResetMaxSpeed();
 	void				DrawDebugGeometryOverlays(void);
 
 	virtual Vector		EyeDirection2D( void );

@@ -688,6 +688,9 @@ void C_HL2MP_Player::StartSprinting( void )
 	m_fIsSprinting = true;
 }
 
+void C_HL2MP_Player::ResetMaxSpeed() {
+	SetMaxSpeed(IsDucking() || IsSprinting() ? HL2_SPRINT_SPEED : HL2_NORM_SPEED);
+}
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------

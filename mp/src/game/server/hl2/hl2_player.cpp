@@ -221,6 +221,7 @@ public:
 };
 
 
+
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 void CC_ToggleZoom( void )
@@ -922,6 +923,11 @@ void CHL2_Player::StartAdmireGlovesAnimation( void )
 			m_flAdmireGlovesAnimTime = gpGlobals->curtime + vm->SequenceDuration( idealSequence ); 
 		}
 	}
+}
+
+
+void CHL2_Player::ResetMaxSpeed() {
+	SetMaxSpeed(IsDucking() || IsSprinting() ? HL2_SPRINT_SPEED : HL2_NORM_SPEED);
 }
 
 void CHL2_Player::HandleAdmireGlovesAnimation( void )
@@ -3367,6 +3373,8 @@ bool CHL2_Player::Weapon_Switch( CBaseCombatWeapon *pWeapon, int viewmodelindex 
 	{
 		StopZooming();
 	}
+
+		
 
 	return BaseClass::Weapon_Switch( pWeapon, viewmodelindex );
 }

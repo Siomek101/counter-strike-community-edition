@@ -200,7 +200,8 @@ public:
 
 	virtual float				GetDefaultAnimSpeed( void ) { return 1.0; }
 
-	void						SetMaxSpeed( float flMaxSpeed ) { m_flMaxspeed = flMaxSpeed; }
+	void						SetMaxSpeed(float flMaxSpeed) { m_flMaxspeed = flMaxSpeed; }
+	virtual void				ResetMaxSpeed() {}
 	float						MaxSpeed() const		{ return m_flMaxspeed; }
 
 	// Should this object cast shadows?

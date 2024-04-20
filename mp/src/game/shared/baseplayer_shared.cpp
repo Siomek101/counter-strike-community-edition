@@ -780,7 +780,7 @@ void CBasePlayer::GetStepSoundVelocities( float *velwalk, float *velrun )
 	else
 	{
 		*velwalk = 150;
-		*velrun = 240;
+		*velrun = 180;
 	}
 }
 
@@ -856,6 +856,7 @@ bool CBasePlayer::Weapon_Switch( CBaseCombatWeapon *pWeapon, int viewmodelindex 
 		if ( pViewModel )
 			pViewModel->RemoveEffects( EF_NODRAW );
 		ResetAutoaim( );
+		ResetMaxSpeed();
 		return true;
 	}
 	return false;

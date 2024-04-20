@@ -2103,11 +2103,12 @@ void CBaseCombatCharacter::Weapon_Equip( CBaseCombatWeapon *pWeapon )
 	}
 	// If default ammo given is greater than clip
 	// size, fill clips and give extra ammo
-	else if (pWeapon->GetDefaultClip1() >  pWeapon->GetMaxClip1() )
-	{
-		pWeapon->m_iClip1 = pWeapon->GetMaxClip1();
-		GiveAmmo( (pWeapon->GetDefaultClip1() - pWeapon->GetMaxClip1()), pWeapon->m_iPrimaryAmmoType); 
-	}
+	// edit: nuh uh
+	//else if (pWeapon->GetDefaultClip1() >  pWeapon->GetMaxClip1() )
+	//{
+	//	pWeapon->m_iClip1 = pWeapon->GetMaxClip1();
+	//	GiveAmmo( (pWeapon->GetDefaultClip1() - pWeapon->GetMaxClip1()), pWeapon->m_iPrimaryAmmoType); 
+	//}
 
 	// ----------------------
 	//  Give Secondary Ammo
@@ -2164,6 +2165,8 @@ void CBaseCombatCharacter::Weapon_Equip( CBaseCombatWeapon *pWeapon )
 
 	// Pass the lighting origin over to the weapon if we have one
 	pWeapon->SetLightingOriginRelative( GetLightingOriginRelative() );
+
+	
 }
 
 //-----------------------------------------------------------------------------

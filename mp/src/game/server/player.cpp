@@ -477,6 +477,20 @@ inline bool ShouldRunCommandsInContext( const CCommandContext *ctx )
 #endif
 }
 
+void CBasePlayer::SetMaxSpeed(float flMaxSpeed) {
+
+	CBaseCombatWeapon* wpn = GetActiveWeapon();
+	if (wpn == NULL) {
+		m_flMaxspeed = flMaxSpeed;
+		return;
+	}
+
+	float weight = wpn->GetWeight();
+
+	m_flMaxspeed = flMaxSpeed - Min(weight * 10, flMaxSpeed - 50);
+}
+void CBasePlayer::ResetMaxSpeed() {
+}
 
 //-----------------------------------------------------------------------------
 // Purpose: 
@@ -4827,6 +4841,19 @@ CBaseEntity *CBasePlayer::EntSelectSpawnPoint()
 		if ( pSpot ) 
 			goto ReturnSpot;
 	}
+	else if (g_pGameRules->IsTeamVsTeam())
+	{
+		int team = GetTeamNumber();
+
+		pSpot = gEntList.FindEntityByClassname(g_pLastSpawn, team == 0 ? "info_player_team1" : "info_player_team2");
+		if (pSpot)
+			goto ReturnSpot;
+		Warning("Player spawn not found for teamplay!\nUsing default.\n");
+		pSpot = gEntList.FindEntityByClassname(g_pLastSpawn, "info_player_start");
+		if (pSpot)
+			goto ReturnSpot;
+
+	}
 	else if ( g_pGameRules->IsDeathmatch() )
 	{
 		pSpot = g_pLastSpawn;
@@ -6637,7 +6664,7 @@ bool CBasePlayer::BumpWeapon( CBaseCombatWeapon *pWeapon )
 	// ----------------------------------------
 	// If I already have it just take the ammo
 	// ----------------------------------------
-	if (Weapon_OwnsThisType( pWeapon->GetClassname(), pWeapon->GetSubType())) 
+	if (0 && Weapon_OwnsThisType( pWeapon->GetClassname(), pWeapon->GetSubType())) 
 	{
 		if( Weapon_EquipAmmoOnly( pWeapon ) )
 		{

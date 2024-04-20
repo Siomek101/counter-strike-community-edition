@@ -700,7 +700,8 @@ public:
 	void	SetConnected( PlayerConnectedState iConnected ) { m_iConnected = iConnected; }
 	virtual void EquipSuit( bool bPlayEffects = true );
 	virtual void RemoveSuit( void );
-	void	SetMaxSpeed( float flMaxSpeed ) { m_flMaxspeed = flMaxSpeed; }
+	void	SetMaxSpeed(float flMaxSpeed);
+	virtual void	ResetMaxSpeed();
 
 	void	NotifyNearbyRadiationSource( float flRange );
 

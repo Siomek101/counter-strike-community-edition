@@ -96,6 +96,14 @@ public:
 	virtual int		Damage_GetNoPhysicsForce( void );
 	virtual int		Damage_GetShouldNotBleed( void );
 
+	int roundStartTime = 0;
+	int freezetime = 10;
+	bool IsFreezetime() { return IsTeamVsTeam() && gpGlobals->curtime - roundStartTime > freezetime; };
+	void ResetRound() {
+
+		roundStartTime = freezetime;
+	}
+
 	CMultiplayRules();
 	virtual ~CMultiplayRules() {}
 
@@ -123,7 +131,8 @@ public:
 	virtual bool SwitchToNextBestWeapon( CBaseCombatCharacter *pPlayer, CBaseCombatWeapon *pCurrentWeapon );
 
 // Functions to verify the single/multiplayer status of a game
-	virtual bool IsDeathmatch( void );
+	virtual bool IsDeathmatch(void);
+	virtual bool IsTeamVsTeam(void);
 	virtual bool IsCoOp( void );
 
 // Client connection/disconnection
