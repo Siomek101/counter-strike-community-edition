@@ -81,6 +81,7 @@ bool g_bMovementOptimizations = true;
 #define	NUM_CROUCH_HINTS	3
 
 extern IGameMovement *g_pGameMovement;
+ConVar sv_autobhop("sv_autobhop", "0", FCVAR_SERVER_CAN_EXECUTE | FCVAR_CHEAT);
 
 #if defined( PLAYER_GETTING_STUCK_TESTING )
 
@@ -1336,7 +1337,9 @@ void CGameMovement::CheckWaterJump( void )
 			if ( ( tr.fraction < 1.0f ) && ( tr.plane.normal.z >= 0.7 ) )
 			{
 				mv->m_vecVelocity[2] = 256.0f;			// Push up
-				mv->m_nOldButtons |= IN_JUMP;		// Don't jump again until released
+				if (sv_autobhop.GetFloat() == 0) {
+					mv->m_nOldButtons |= IN_JUMP;	// don't jump again until released
+				}
 				player->AddFlag( FL_WATERJUMP );
 				player->m_flWaterJumpTime = 2000.0f;	// Do this for 2 seconds
 			}
@@ -2353,6 +2356,7 @@ void CGameMovement::PlaySwimSound()
 //-----------------------------------------------------------------------------
 bool CGameMovement::CheckJumpButton( void )
 {
+
 	if (player->pl.deadflag)
 	{
 		mv->m_nOldButtons |= IN_JUMP ;	// don't jump again until released
@@ -2394,7 +2398,9 @@ bool CGameMovement::CheckJumpButton( void )
 	// No more effect
  	if (player->GetGroundEntity() == NULL)
 	{
-		mv->m_nOldButtons |= IN_JUMP;
+		if (sv_autobhop.GetFloat() == 0) {
+			mv->m_nOldButtons |= IN_JUMP;	// don't jump again until released
+		}
 		return false;		// in air, so no effect
 	}
 
@@ -2404,8 +2410,10 @@ bool CGameMovement::CheckJumpButton( void )
 		return false;
 #endif
 
-	if ( mv->m_nOldButtons & IN_JUMP )
-		return false;		// don't pogo stick
+	if (sv_autobhop.GetFloat() == 0) {
+		if (mv->m_nOldButtons & IN_JUMP)
+			return false;		// don't pogo stick
+	}
 
 	// Cannot jump will in the unduck transition.
 	if ( player->m_Local.m_bDucking && (  player->GetFlags() & FL_DUCKING ) )
@@ -2525,7 +2533,10 @@ bool CGameMovement::CheckJumpButton( void )
 #endif
 
 	// Flag that we jumped.
-	mv->m_nOldButtons |= IN_JUMP;	// don't jump again until released
+
+	if (sv_autobhop.GetFloat() == 0) {
+		mv->m_nOldButtons |= IN_JUMP;	// don't jump again until released
+	}
 	return true;
 }
 

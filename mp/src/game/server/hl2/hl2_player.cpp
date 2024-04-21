@@ -46,6 +46,7 @@
 #include "gamestats.h"
 #include "filters.h"
 #include "tier0/icommandline.h"
+#include "gamemovement.h"
 
 #ifdef HL2_EPISODIC
 #include "npc_alyx_episodic.h"
@@ -603,7 +604,7 @@ void CHL2_Player::PreThink(void)
 
 	// This is an experiment of mine- autojumping! 
 	// only affects you if sv_autojump is nonzero.
-	if( (GetFlags() & FL_ONGROUND) && sv_autojump.GetFloat() != 0 )
+	if( 0 && (GetFlags() & FL_ONGROUND) && sv_autojump.GetFloat() != 0 )
 	{
 		VPROF( "CHL2_Player::PreThink-Autojump" );
 		// check autojump
