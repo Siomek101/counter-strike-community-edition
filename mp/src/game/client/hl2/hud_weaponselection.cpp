@@ -32,8 +32,8 @@ ConVar hud_showemptyweaponslots( "hud_showemptyweaponslots", "1", FCVAR_ARCHIVE,
 #define PLUS_DISPLAY_TIMEOUT			0.5f	// Seconds
 #define PLUS_FADEOUT_TIME				0.75f
 
-#define FASTSWITCH_DISPLAY_TIMEOUT		1.5f
-#define FASTSWITCH_FADEOUT_TIME			1.5f
+#define FASTSWITCH_DISPLAY_TIMEOUT		10.0f
+#define FASTSWITCH_FADEOUT_TIME			10.0f
 
 #define CAROUSEL_SMALL_DISPLAY_ALPHA	200.0f
 #define FASTSWITCH_SMALL_DISPLAY_ALPHA	160.0f

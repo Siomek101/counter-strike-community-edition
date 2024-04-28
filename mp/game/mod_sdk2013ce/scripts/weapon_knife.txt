@@ -4,7 +4,7 @@ WeaponData
 {
 	// Weapon data is loaded by both the Game and Client DLLs.
 	"printname"	"Knife"
-	"viewmodel"				"models/weapons/v_crowbar.mdl"
+	"viewmodel"				"models/weapons/v_knife.mdl"
 	"playermodel"			"models/weapons/w_crowbar.mdl"
 	"anim_prefix"			"crowbar"
 	"bucket"				"2"
@@ -20,9 +20,9 @@ WeaponData
 	// Sounds for the weapon. There is a max of 16 sounds per category (i.e. max 16 "single_shot" sounds)
 	SoundData
 	{
-		"single_shot"		"Weapon_Crowbar.Single"
-		"melee_hit"			"Weapon_Crowbar.Melee_Hit"
-		"melee_hit_world"	"Weapon_Crowbar.Melee_HitWorld"
+		"single_shot"		"Weapon_Knife.Slash"
+		"melee_hit"			"Weapon_Knife.HitWall"
+		"melee_hit_world"	"Weapon_Knife.HitWall"
 	}
 
 	// Weapon Sprite data is loaded by the Client DLL.

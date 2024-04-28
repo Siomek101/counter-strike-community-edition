@@ -113,7 +113,8 @@ ConVar	spec_freeze_distance_max( "spec_freeze_distance_max", "200", FCVAR_CHEAT,
 
 static ConVar	cl_first_person_uses_world_model ( "cl_first_person_uses_world_model", "0", FCVAR_ARCHIVE, "Causes the third person model to be drawn instead of the view model" );
 
-ConVar demo_fov_override( "demo_fov_override", "0", FCVAR_CLIENTDLL | FCVAR_DONTRECORD, "If nonzero, this value will be used to override FOV during demo playback." );
+ConVar demo_fov_override("demo_fov_override", "0", FCVAR_CLIENTDLL | FCVAR_DONTRECORD, "If nonzero, this value will be used to override FOV during demo playback.");
+ConVar fov_debug( "fov_debug", "0", FCVAR_CLIENTDLL | FCVAR_CHEAT, "If nonzero, this value will be used to override FOV." );
 
 // This only needs to be approximate - it just controls the distance to the pivot-point of the head ("the neck") of the in-game character, not the player's real-world neck length.
 // Ideally we would find this vector by subtracting the neutral-pose difference between the head bone (the pivot point) and the "eyes" attachment point.
@@ -2400,6 +2401,10 @@ bool C_BasePlayer::IsUseableEntity( CBaseEntity *pEntity, unsigned int requiredC
 //-----------------------------------------------------------------------------
 float C_BasePlayer::GetFOV( void )
 {
+	if (fov_debug.GetFloat() > 0.0f) {
+		return clamp(fov_debug.GetFloat(), 1.0f, 180.0f);
+
+	}
 	// Allow users to override the FOV during demo playback
 	bool bUseDemoOverrideFov = engine->IsPlayingDemo() && demo_fov_override.GetFloat() > 0.0f;
 #if defined( REPLAY_ENABLED )
